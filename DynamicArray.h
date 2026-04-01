@@ -10,4 +10,16 @@ public:
 	DynamicArray();
 	DynamicArray(size_t initialCapacity);
 	~DynamicArray();
+
+	void print_array();
+	void check_capacity();
+	
+	void push_back(int data);
+	void push_front(int data);
+	void push_at(int data, size_t index);
+
+	void pop_back();
+	void pop_front();
+	void pop_at(size_t index);
+
 };

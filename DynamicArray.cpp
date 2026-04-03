@@ -54,3 +54,12 @@ void DynamicArray::pop_front() {
 
 void DynamicArray::pop_at(size_t index) {
 }
+
+void DynamicArray::append(){
+}
+
+void DynamicArray::prepend(){
+}
+
+void DynamicArray::insert(){
+}

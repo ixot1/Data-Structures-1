@@ -22,8 +22,4 @@ public:
 	void pop_front();
 	void pop_at(size_t index);
 
-	void append();
-	void prepend();
-	void insert();
-
 };

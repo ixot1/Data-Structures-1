@@ -1,5 +1,7 @@
 ﻿#include <iostream>
 #include "DynamicArray.h"
+#include "Singly_Linked_List.h"
+#include "Doubly_Linked_List.h"
 
 int main()
 {	
@@ -11,4 +13,3 @@ int main()
 	array.push_back(5);
 	array.print_array();
 }
-

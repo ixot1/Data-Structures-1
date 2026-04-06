@@ -20,7 +20,7 @@ public:
 
 	void pop_back();
 	void pop_front();
-	void pop_at(size_t index); //są nam potrzebne oba push i pull?
+	void pop_at(size_t index); //są nam potrzebne oba push i pop?
 
 	void append();
 	void prepend();

@@ -4,8 +4,8 @@
 class DoublyLinkedList : public Strucuture {
 private:
     struct Node {
-        Node* prev;
         int data;
+        Node* prev;
         Node* next;
         Node(int value) : prev(nullptr), data(value), next(nullptr) {}
     };
@@ -19,6 +19,7 @@ public:
     virtual size_t get_size(void) const override;
     virtual int get_component(size_t index) override;
     virtual bool search(int value) override;
+    virtual int* searchAll(int value, int& count) override;
 
     virtual int pop_front(void) override;
     virtual int pop_back(void) override;

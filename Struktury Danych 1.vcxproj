@@ -127,11 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DynamicArray.cpp" />
+    <ClCompile Include="Doubly_Linked_List.cpp" />
+    <ClCompile Include="Dynamic_Array.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Singly_Linked_List.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DynamicArray.h" />
+    <ClInclude Include="Doubly_Linked_List.h" />
+    <ClInclude Include="Dynamic_Array.h" />
+    <ClInclude Include="Singly_Linked_List.h" />
+    <ClInclude Include="Structure.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

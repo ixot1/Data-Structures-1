@@ -1,4 +1,4 @@
-#include "DynamicArray.h"
+#include "Dynamic_Array.h"
 #include <iostream>
 
 DynamicArray::DynamicArray()
@@ -46,10 +46,10 @@ void DynamicArray::push_front(int data) {
 void DynamicArray::push_at(int data, size_t index) {
 }
 
-void DynamicArray::pop_back() {
+int DynamicArray::pop_back() {
 }
 
-void DynamicArray::pop_front() {
+int DynamicArray::pop_front() {
 }
 
 void DynamicArray::pop_at(size_t index) {

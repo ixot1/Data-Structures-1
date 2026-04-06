@@ -1,7 +1,7 @@
 #pragma once
 #include "Structure.h"
 
-class DoublyLinkedList : public Strucuture {
+class DoublyLinkedList : public Structure {
 private:
     struct Node {
         int data;
@@ -17,7 +17,7 @@ private:
 public:
     virtual void print_array(void) override;
     virtual size_t get_size(void) const override;
-    virtual int get_component(size_t index) override;
+    virtual int get_component(size_t index) const override;
     virtual bool search(int value) override;
     virtual int* searchAll(int value, int& count) override;
 
@@ -28,12 +28,6 @@ public:
     void push_back(int data) override;
     void push_front(int data) override;
     void push_at(int data, size_t index) override;
-
-    virtual int remove(size_t index) override;
-
-    virtual void append(int value) override;
-    virtual void prepend(int value) override;
-    virtual void insert(int value, size_t index) override;
 
     DoublyLinkedList();
     ~DoublyLinkedList();

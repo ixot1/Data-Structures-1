@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "DynamicArray.h"
+#include "Dynamic_Array.h"
 #include "Singly_Linked_List.h"
 #include "Doubly_Linked_List.h"
 

@@ -1,30 +1,30 @@
 #pragma once
+#include "Structure.h"
 
-class DynamicArray {
+class DynamicArray : public Structure{
 private:
 	int* array;
 	size_t size;
 	size_t capacity;
 
 public:
-	DynamicArray();
-	DynamicArray(size_t initialCapacity);
-	~DynamicArray();
+    virtual void print_array(void) override;
+    virtual size_t get_size(void) const override;
+    virtual int get_component(size_t index) const override;
+    virtual bool search(int value) override;
+    virtual int* searchAll(int value, int& count) override;
 
-	void print_array();
-	void check_capacity();
-	
-	void push_back(int data);
-	void push_front(int data);
-	void push_at(int data, size_t index);
+    virtual int pop_front(void) override;
+    virtual int pop_back(void) override;
+    void pop_at(size_t index) override;
 
-	void pop_back();
-	void pop_front();
-	void pop_at(size_t index); //są nam potrzebne oba push i pop?
+    void push_back(int data) override;
+    void push_front(int data) override;
+    void push_at(int data, size_t index) override;
 
-	void append();
-	void prepend();
-	void insert();
-	void remove();
+    void check_capacity(void) override;
 
+    DynamicArray();
+    DynamicArray(size_t initialCapacity);
+    ~DynamicArray();
 };

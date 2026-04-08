@@ -105,7 +105,7 @@ void SinglyLinkedList::push_at(int value, size_t index) {
 int SinglyLinkedList::pop_front() {
     if (!head) {
         std::cout << "\nThere is nothing to remove.\n";
-        return;
+        return 0;
     }
 
     Node* temp = head;
@@ -121,7 +121,7 @@ int SinglyLinkedList::pop_front() {
 int SinglyLinkedList::pop_back() {
     if (!head) {
         std::cout << "\nThere is nothing to remove.\n";
-        return;
+        return 0;
     }
 
     if (!head->next)
@@ -139,17 +139,17 @@ int SinglyLinkedList::pop_back() {
     return value;
 }
 
-void SinglyLinkedList::pop_at(size_t index) {
+int SinglyLinkedList::pop_at(size_t index) {
     if (index >= size)
     {
         std::cout << "\nThere is nothing to remove.\n";
-        return;
+        return 0;
     };
 
     if (index == 0)
     {
         pop_front();
-        return;
+        return 0;
     }
 
     Node* current = head;
@@ -163,6 +163,7 @@ void SinglyLinkedList::pop_at(size_t index) {
     delete temp;
 
     size--;
+    return 0;
 }
 
 bool SinglyLinkedList::search(int value) {
@@ -177,20 +178,20 @@ bool SinglyLinkedList::search(int value) {
     return false;
 }
 
-int* SinglyLinkedList::searchAll(int value, int& count) {
-    Node* current = head;
-    size_t index = 0;
-    size_t count = 0;
-
-    // checking each node in the list until we find the value or reach the end of the list, and counting occurrences
-    while (current) {
-        if (current->data == value) {
-            std::cout << "Found at index: " << index << std::endl;
-            count++;
-        }
-        current = current->next;
-        index++;
-    }
-
-    std::cout << "Occurrences: " << count << std::endl;
-}
+//int* SinglyLinkedList::searchAll(int value, int& count) {
+//    Node* current = head;
+//    size_t index = 0;
+//    size_t count = 0;
+//
+//    // checking each node in the list until we find the value or reach the end of the list, and counting occurrences
+//    while (current) {
+//        if (current->data == value) {
+//            std::cout << "Found at index: " << index << std::endl;
+//            count++;
+//        }
+//        current = current->next;
+//        index++;
+//    }
+//
+//    std::cout << "Occurrences: " << count << std::endl;
+//}

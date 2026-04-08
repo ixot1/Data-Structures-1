@@ -94,35 +94,35 @@ bool DoublyLinkedList::search(int value) {
 }
 
 
-int* DoublyLinkedList::searchAll(int value, int& count) {
-        Node* left = this->head;
-        Node* right = this->tail;
+//int* DoublyLinkedList::searchAll(int value, int& count) {
+//        Node* left = this->head;
+//        Node* right = this->tail;
+//
+//        int leftIndex = 0;
+//        int rightIndex = get_size() - 1;
+//
+//        while (left != nullptr && right != nullptr && leftIndex <= rightIndex) {
+//
+//            // check left side
+//            if (left->data == value) {
+//                std::cout << "Found at index: " << leftIndex << std::endl;
+//            }
+//
+//            // check right side (avoid duplicate if same node)
+//            if (right != left && right->data == value) {
+//                std::cout << "Found at index: " << rightIndex << std::endl;
+//            }
+//
+//            left = left->next;
+//            right = right->prev;
+//
+//            leftIndex++;
+//            rightIndex--;
+//        }
+// } 
 
-        int leftIndex = 0;
-        int rightIndex = get_size() - 1;
 
-        while (left != nullptr && right != nullptr && leftIndex <= rightIndex) {
-
-            // check left side
-            if (left->data == value) {
-                std::cout << "Found at index: " << leftIndex << std::endl;
-            }
-
-            // check right side (avoid duplicate if same node)
-            if (right != left && right->data == value) {
-                std::cout << "Found at index: " << rightIndex << std::endl;
-            }
-
-            left = left->next;
-            right = right->prev;
-
-            leftIndex++;
-            rightIndex--;
-        }
- } 
-
-
-void DoublyLinkedList::push_front(int value) {
+void DoublyLinkedList::push_back(int value) {
 
     Node* newNode = new Node(value);
 
@@ -141,7 +141,7 @@ void DoublyLinkedList::push_front(int value) {
     size++;
 }
 
-void DoublyLinkedList::push_back(int value) {
+void DoublyLinkedList::push_front(int value) {
 
     Node* newNode = new Node(value);
 
@@ -193,18 +193,18 @@ void DoublyLinkedList::push_at(int value, size_t index) {
         size++;
 }
 
-void DoublyLinkedList::pop_at(size_t index) {
+int DoublyLinkedList::pop_at(size_t index) {
     if (index >= size) {
         std::cout << "\nThere is nothing to remove.\n";
-        return;
+        return 0;
     }
     if (index == 0) {
         pop_front();
-        return;
+        return 0;
     }
     if (index == size - 1) {
         pop_back();
-        return;
+        return 0;
     }
     Node* temp = head;
     for (size_t i = 0; i < index; i++) {
@@ -214,13 +214,14 @@ void DoublyLinkedList::pop_at(size_t index) {
     temp->next->prev = temp->prev; // Node after temp now points at Node before temp
     delete temp;
     size--;
+    return 0;
 }
 
 int DoublyLinkedList::pop_front() {
     if (!head)
     {
         std::cout << "\nThere is nothing to remove.\n";
-        return;
+        return 0;
     }
 
     Node* temp = head;
@@ -241,7 +242,7 @@ int DoublyLinkedList::pop_back() {
     if (!tail)
     {
         std::cout << "\nThere is nothing to remove.\n";
-        return;
+        return 0;
     }
 
     Node* temp = tail;

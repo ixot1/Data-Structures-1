@@ -85,8 +85,12 @@ void SinglyLinkedList::push_at(int value, size_t index) {
     }
 
     if (index > size)
-        throw std::out_of_range("Index");
+    {
+        std::cout << "\nIndex is out of range.\n";
+        return;
+    }
 
+    //we need to find the node at index-1, then we can insert the new node after it
     Node* current = head;
     for (size_t i = 0; i < index - 1; i++)
         current = current->next;
@@ -96,4 +100,97 @@ void SinglyLinkedList::push_at(int value, size_t index) {
     current->next = newNode;
 
     size++;
+}
+
+int SinglyLinkedList::pop_front() {
+    if (!head) {
+        std::cout << "\nThere is nothing to remove.\n";
+        return;
+    }
+
+    Node* temp = head;
+    int value = temp->data;
+
+    head = head->next;
+    delete temp;
+
+    size--;
+    return value;
+}
+
+int SinglyLinkedList::pop_back() {
+    if (!head) {
+        std::cout << "\nThere is nothing to remove.\n";
+        return;
+    }
+
+    if (!head->next)
+        return pop_front();
+
+    Node* current = head;
+    while (current->next->next)
+        current = current->next;
+
+    int value = current->next->data;
+    delete current->next;
+    current->next = nullptr;
+
+    size--;
+    return value;
+}
+
+void SinglyLinkedList::pop_at(size_t index) {
+    if (index >= size)
+    {
+        std::cout << "\nThere is nothing to remove.\n";
+        return;
+    };
+
+    if (index == 0)
+    {
+        pop_front();
+        return;
+    }
+
+    Node* current = head;
+    for (size_t i = 0; i < index - 1; i++)
+        current = current->next;
+
+    Node* temp = current->next;
+    int value = temp->data;
+
+    current->next = temp->next;
+    delete temp;
+
+    size--;
+}
+
+bool SinglyLinkedList::search(int value) {
+    Node* current = head;
+
+    // checking each node in the list until we find the value or reach the end of the list
+    while (current) {
+        if (current->data == value)
+            return true;
+        current = current->next;
+    }
+    return false;
+}
+
+int* SinglyLinkedList::searchAll(int value, int& count) {
+    Node* current = head;
+    size_t index = 0;
+    size_t count = 0;
+
+    // checking each node in the list until we find the value or reach the end of the list, and counting occurrences
+    while (current) {
+        if (current->data == value) {
+            std::cout << "Found at index: " << index << std::endl;
+            count++;
+        }
+        current = current->next;
+        index++;
+    }
+
+    std::cout << "Occurrences: " << count << std::endl;
 }

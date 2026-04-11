@@ -19,13 +19,13 @@ DynamicArray::~DynamicArray() {
 }
 
 void DynamicArray::resize(size_t new_capacity) {
-    // createing a new array with the new capacity
+    // creating a new array with the new capacity
     int* new_array = new int[new_capacity];
-
+    
     // copying data from the old array to the new one
     std::memcpy(new_array, array, size * sizeof(int));
 
-    delete[] array; //important to free up memory taken by old array, otherwise we would have a memory leak
+    delete[] array; //freeing memory used by old array
     array = new_array;
     capacity = new_capacity;
 }
@@ -92,10 +92,9 @@ void DynamicArray::push_at(int value, size_t index) {
     size++;
 }
 
-int DynamicArray::pop_front(void) {
+void DynamicArray::pop_front(void) {
     if (!size) {
         std::cout << "There are no elements to remove.\n";
-        return 0;
     }
 
     for (size_t i = 0; i < size; i++) {
@@ -103,28 +102,23 @@ int DynamicArray::pop_front(void) {
     }
 
     size--;
-    return 0;
 }
 
-int DynamicArray::pop_back(void) {
+void DynamicArray::pop_back(void) {
     if (!size) {
         std::cout << "There are no elements to remove.\n";
-        return 0;
     }
 
     size--;
-    return 0;
 }
 
-int DynamicArray::pop_at(size_t index) {
+void DynamicArray::pop_at(size_t index) {
     if (!size) {
         std::cout << "There are no elements to remove.\n";
-        return 0;
     }
 
     if (index >= size) {
         std::cout << "\nIndex is out of range\n";
-        return 0;
     }
 
     for (size_t i = index; i < size; i++) {
@@ -132,7 +126,6 @@ int DynamicArray::pop_at(size_t index) {
     }
 
     size--;
-    return 0;
 }
 
 bool DynamicArray::search(int value) {

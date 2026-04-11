@@ -21,13 +21,13 @@ public:
     virtual bool search(int value) override;
    // virtual int* searchAll(int value, int& count) override;
 
-    virtual int pop_front(void) override;
-    virtual int pop_back(void) override;
-    virtual int pop_at(size_t index) override;
+    virtual void pop_front(void) override;
+    virtual void pop_back(void) override;
+    virtual void pop_at(size_t index) override;
 
-    void push_back(int data) override;
-    void push_front(int data) override;
-    void push_at(int data, size_t index) override;
+    virtual void push_back(int data) override;
+    virtual void push_front(int data) override;
+    virtual void push_at(int data, size_t index) override;
 
 
     DoublyLinkedList();

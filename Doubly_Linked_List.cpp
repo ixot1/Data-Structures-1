@@ -193,18 +193,18 @@ void DoublyLinkedList::push_at(int value, size_t index) {
         size++;
 }
 
-int DoublyLinkedList::pop_at(size_t index) {
+void DoublyLinkedList::pop_at(size_t index) {
     if (index >= size) {
         std::cout << "\nThere is nothing to remove.\n";
-        return 0;
+        return;
     }
     if (index == 0) {
         pop_front();
-        return 0;
+        return;
     }
     if (index == size - 1) {
         pop_back();
-        return 0;
+        return;
     }
     Node* temp = head;
     for (size_t i = 0; i < index; i++) {
@@ -214,19 +214,17 @@ int DoublyLinkedList::pop_at(size_t index) {
     temp->next->prev = temp->prev; // Node after temp now points at Node before temp
     delete temp;
     size--;
-    return 0;
+    return;
 }
 
-int DoublyLinkedList::pop_front() {
+void DoublyLinkedList::pop_front() {
     if (!head)
     {
         std::cout << "\nThere is nothing to remove.\n";
-        return 0;
+        return;
     }
 
     Node* temp = head;
-    int value = temp->data;
-
     head = head->next; // head is passed to the next Node
     if (head)
         head->prev = nullptr; // Node after old head now points at nothing instead of the old head
@@ -235,19 +233,17 @@ int DoublyLinkedList::pop_front() {
 
     delete temp;
     size--;
-    return value;
+    return;
 }
 
-int DoublyLinkedList::pop_back() {
+void DoublyLinkedList::pop_back() {
     if (!tail)
     {
         std::cout << "\nThere is nothing to remove.\n";
-        return 0;
+        return;
     }
 
     Node* temp = tail;
-    int value = temp->data;
-
     tail = tail->prev; // tail is passed to the prior Node
     if (tail)
         tail->next = nullptr; // Node before old tail now points at nothing instead of the old tail
@@ -257,7 +253,6 @@ int DoublyLinkedList::pop_back() {
    
     delete temp;
     size--;
-    return value;
 }
 
 

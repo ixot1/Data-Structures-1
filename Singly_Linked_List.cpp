@@ -102,54 +102,48 @@ void SinglyLinkedList::push_at(int value, size_t index) {
     size++;
 }
 
-int SinglyLinkedList::pop_front() {
+void SinglyLinkedList::pop_front() {
     if (!head) {
         std::cout << "\nThere is nothing to remove.\n";
-        return 0;
+        return;
     }
 
     Node* temp = head;
-    int value = temp->data;
-
     head = head->next;
     delete temp;
 
     size--;
-    return value;
 }
 
-int SinglyLinkedList::pop_back() {
+void SinglyLinkedList::pop_back() {
     if (!head) {
         std::cout << "\nThere is nothing to remove.\n";
-        return 0;
+        return;
     }
 
-    if (!head->next)
-        return pop_front();
+    if (!head->next) {
+        pop_front();
+    }
 
     Node* current = head;
     while (current->next->next)
         current = current->next;
 
-    int value = current->next->data;
     delete current->next;
     current->next = nullptr;
 
     size--;
-    return value;
 }
 
-int SinglyLinkedList::pop_at(size_t index) {
+void SinglyLinkedList::pop_at(size_t index) {
     if (index >= size)
     {
         std::cout << "\nThere is nothing to remove.\n";
-        return 0;
     };
 
     if (index == 0)
     {
         pop_front();
-        return 0;
     }
 
     Node* current = head;
@@ -163,7 +157,6 @@ int SinglyLinkedList::pop_at(size_t index) {
     delete temp;
 
     size--;
-    return 0;
 }
 
 bool SinglyLinkedList::search(int value) {

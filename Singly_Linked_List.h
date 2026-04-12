@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "Structure.h"
 
 class SinglyLinkedList : public Structure {
@@ -15,11 +14,10 @@ private:
     Node* tail;
 
 public:
-    virtual void print_array(void) override;
+    virtual void print(void) override;
     virtual size_t get_size(void) const override;
     virtual int get_component(size_t index) const override;
     virtual bool search(int value) override;
-    //virtual int* searchAll(int value, int& count) override;
 
     virtual void pop_front(void) override;
     virtual void pop_back(void) override;
@@ -27,7 +25,7 @@ public:
 
     virtual void push_back(int data) override;
     virtual void push_front(int data) override;
-    virtual void push_at(int data, size_t index) override;
+    virtual void push_at(size_t index, int data) override;
 
     SinglyLinkedList();
     ~SinglyLinkedList();

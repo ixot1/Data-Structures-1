@@ -127,12 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Benchmark.cpp" />
+    <ClCompile Include="Benchmark_Menu.cpp" />
     <ClCompile Include="Doubly_Linked_List.cpp" />
     <ClCompile Include="Dynamic_Array.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Singly_Linked_List.cpp" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Benchmark.h" />
+    <ClInclude Include="Benchmark_Menu.h" />
     <ClInclude Include="Doubly_Linked_List.h" />
     <ClInclude Include="Dynamic_Array.h" />
     <ClInclude Include="Singly_Linked_List.h" />

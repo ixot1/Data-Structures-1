@@ -5,7 +5,7 @@
 //constuction of the list
 SinglyLinkedList::SinglyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
-//destruction of the list, we need to free memory for each Node in the List, otherwise we would have a memory leak
+//destroying all nodes to free occupied memory
 SinglyLinkedList::~SinglyLinkedList() {
     Node* current = head;
     while (current) {
@@ -15,7 +15,7 @@ SinglyLinkedList::~SinglyLinkedList() {
     }
 }
 
-void SinglyLinkedList::print_array() {
+void SinglyLinkedList::print() {
     Node* current = head;
     while (current) {
         std::cout << current->data << " ";
@@ -48,7 +48,7 @@ void SinglyLinkedList::push_front(int value) {
     //if the list is empty (tail=nullptr) then the new node becomes the tail as well as head,
     // otherwise the new node should point to the old head and become the new head
     if (!tail) {
-        tail = newNode;
+        head = tail = newNode;
     }
     else
     {
@@ -65,22 +65,18 @@ void SinglyLinkedList::push_back(int value) {
     //if the list is empty (head=nullptr) then the new node becomes the head as well as tail,
     // otherwise the old tail should point to the new node and the new node becomes the new tail
     if (!head) {
-        head = newNode;
+        head = tail = head = newNode;
     }
     else {
-        Node* current = head;
-        while (current->next)
-            current = current->next;
-
-        current->next = newNode;
+        tail->next = newNode;
+        tail = newNode;
     }
-
     size++;
 }
 
-void SinglyLinkedList::push_at(int value, size_t index) {
+void SinglyLinkedList::push_at(size_t index, int data) {
     if (index == 0) {
-        push_front(value);
+        push_front(data);
         return;
     }
 
@@ -95,7 +91,7 @@ void SinglyLinkedList::push_at(int value, size_t index) {
     for (size_t i = 0; i < index - 1; i++)
         current = current->next;
 
-    Node* newNode = new Node(value);
+    Node* newNode = new Node(data);
     newNode->next = current->next;
     current->next = newNode;
 
@@ -123,6 +119,7 @@ void SinglyLinkedList::pop_back() {
 
     if (!head->next) {
         pop_front();
+        return;
     }
 
     Node* current = head;
@@ -131,6 +128,7 @@ void SinglyLinkedList::pop_back() {
 
     delete current->next;
     current->next = nullptr;
+    tail = current;
 
     size--;
 }
@@ -139,11 +137,13 @@ void SinglyLinkedList::pop_at(size_t index) {
     if (index >= size)
     {
         std::cout << "\nThere is nothing to remove.\n";
+        return;
     };
 
     if (index == 0)
     {
         pop_front();
+        return;
     }
 
     Node* current = head;
@@ -151,7 +151,10 @@ void SinglyLinkedList::pop_at(size_t index) {
         current = current->next;
 
     Node* temp = current->next;
-    int value = temp->data;
+    
+    if (temp == tail) {
+        tail = current;
+    }
 
     current->next = temp->next;
     delete temp;
@@ -170,21 +173,3 @@ bool SinglyLinkedList::search(int value) {
     }
     return false;
 }
-
-//int* SinglyLinkedList::searchAll(int value, int& count) {
-//    Node* current = head;
-//    size_t index = 0;
-//    size_t count = 0;
-//
-//    // checking each node in the list until we find the value or reach the end of the list, and counting occurrences
-//    while (current) {
-//        if (current->data == value) {
-//            std::cout << "Found at index: " << index << std::endl;
-//            count++;
-//        }
-//        current = current->next;
-//        index++;
-//    }
-//
-//    std::cout << "Occurrences: " << count << std::endl;
-//}

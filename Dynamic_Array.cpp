@@ -30,7 +30,7 @@ void DynamicArray::resize(size_t new_capacity) {
     capacity = new_capacity;
 }
 
-void DynamicArray::print_array(void) {
+void DynamicArray::print(void) {
 
     for (size_t i = 0; i < size; i++) {
         std::cout << array[i]<< " " ;
@@ -73,9 +73,9 @@ void DynamicArray::push_front(int value) {
     size++;
 }
 
-void DynamicArray::push_at(int value, size_t index) {
+void DynamicArray::push_at(size_t index, int value) {
     //using similar logic as in push_front and push_back
-    if (index > size && index) {
+    if (index > size) {
         std::cout << "\nIndex is out of range\n";
         return;
     }
@@ -95,6 +95,7 @@ void DynamicArray::push_at(int value, size_t index) {
 void DynamicArray::pop_front(void) {
     if (!size) {
         std::cout << "There are no elements to remove.\n";
+        return;
     }
 
     for (size_t i = 0; i < size; i++) {
@@ -107,6 +108,7 @@ void DynamicArray::pop_front(void) {
 void DynamicArray::pop_back(void) {
     if (!size) {
         std::cout << "There are no elements to remove.\n";
+        return;
     }
 
     size--;
@@ -115,10 +117,12 @@ void DynamicArray::pop_back(void) {
 void DynamicArray::pop_at(size_t index) {
     if (!size) {
         std::cout << "There are no elements to remove.\n";
+        return;
     }
 
     if (index >= size) {
         std::cout << "\nIndex is out of range\n";
+        return;
     }
 
     for (size_t i = index; i < size; i++) {

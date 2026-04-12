@@ -5,7 +5,7 @@
 //constuction of the list
 DoublyLinkedList::DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
-//destruction of the list, we need to free memory for each Node in the List, otherwise we would have a memory leak
+//destroying all nodes to free occupied memory 
 DoublyLinkedList::~DoublyLinkedList() {
     Node* current = head;
     while (current) {
@@ -15,7 +15,7 @@ DoublyLinkedList::~DoublyLinkedList() {
     }
 }
 
-void DoublyLinkedList::print_array(void){
+void DoublyLinkedList::print(void){
     Node* temp = head;
 
     while (temp != nullptr) {
@@ -90,37 +90,8 @@ bool DoublyLinkedList::search(int value) {
         current = current->next;
         current_end = current_end->prev;
     }
-
+    return false;
 }
-
-
-//int* DoublyLinkedList::searchAll(int value, int& count) {
-//        Node* left = this->head;
-//        Node* right = this->tail;
-//
-//        int leftIndex = 0;
-//        int rightIndex = get_size() - 1;
-//
-//        while (left != nullptr && right != nullptr && leftIndex <= rightIndex) {
-//
-//            // check left side
-//            if (left->data == value) {
-//                std::cout << "Found at index: " << leftIndex << std::endl;
-//            }
-//
-//            // check right side (avoid duplicate if same node)
-//            if (right != left && right->data == value) {
-//                std::cout << "Found at index: " << rightIndex << std::endl;
-//            }
-//
-//            left = left->next;
-//            right = right->prev;
-//
-//            leftIndex++;
-//            rightIndex--;
-//        }
-// } 
-
 
 void DoublyLinkedList::push_back(int value) {
 
@@ -159,7 +130,7 @@ void DoublyLinkedList::push_front(int value) {
     size++;
 }
 
-void DoublyLinkedList::push_at(int value, size_t index) {
+void DoublyLinkedList::push_at(size_t index, int value) {
 
     //we check if the index is the beginning or the end of the list, if so we can call push_front or push_back respectively, 
     //otherwise we need to insert the node in the middle of the list

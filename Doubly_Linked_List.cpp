@@ -15,7 +15,7 @@ DoublyLinkedList::~DoublyLinkedList() {
     }
 }
 
-void DoublyLinkedList::print(void){
+void DoublyLinkedList::print(){
     Node* temp = head;
 
     while (temp != nullptr) {
@@ -26,7 +26,7 @@ void DoublyLinkedList::print(void){
     std::cout << std::endl;
 }
 
-size_t DoublyLinkedList::get_size(void) const{
+size_t DoublyLinkedList::get_size() const{
     return size;
 }
 

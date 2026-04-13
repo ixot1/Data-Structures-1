@@ -133,7 +133,6 @@
     <ClCompile Include="Dynamic_Array.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Singly_Linked_List.cpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Benchmark.h" />

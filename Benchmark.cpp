@@ -14,6 +14,7 @@ const int Benchmark::REPETITIONS = 10;
 const int Benchmark::SEED = 12345;
 const std::vector<int> Benchmark::SIZES = { 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000 };
 
+//helper class encapsulating the rng engine and distribution
 class RandomGenerator {
 private:
     std::mt19937 generator;
@@ -41,11 +42,13 @@ static void runBenchmark(const std::string& testName, const std::string& fileNam
 
         for (int r = 0; r < Benchmark::REPETITIONS; ++r) {
 
-            // 1. FAZA PRZYGOTOWANIA
-            std::vector<StructureType> copies(numCopies); 
-            RandomGenerator prepRng(Benchmark::SEED + r, 1, 1000000);
+            //preparation phase
+            //we create multiple instances to prevent low-resolution clock errors for fast O(1) operations
+            std::vector<StructureType> copies(numCopies);
 
-            for (int i = 0; i < numCopies; ++i) { 
+            //deterministic filling of structures based on the current repetition
+            RandomGenerator prepRng(Benchmark::SEED + r, 1, 1000000);
+            for (int i = 0; i < numCopies; ++i) {
                 for (int j = 0; j < n; ++j) {
                     copies[i].push_back(prepRng.getNext());
                 }
@@ -53,18 +56,24 @@ static void runBenchmark(const std::string& testName, const std::string& fileNam
 
             RandomGenerator testRng(Benchmark::SEED + 999 + r, 1, 1000000);
 
-            // 2. FAZA POMIARU
+            //measurement phase
+            //start stopwatch - isolating the actual operation from data generation
             auto start = std::chrono::high_resolution_clock::now();
-            for (int i = 0; i < numCopies; ++i) { 
+
+            for (int i = 0; i < numCopies; ++i) {
+                //execute the passed lambda function (e.g. pop_back)
                 operation(copies[i], testRng, n);
             }
+
             auto end = std::chrono::high_resolution_clock::now();
 
-            // 3. OBLICZENIA
+            //calculations
+            //calculate total nanoseconds for all copies, then divide by numCopies for an average single-op time
             auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
             totalTimeNs += (static_cast<double>(duration) / numCopies);
         }
 
+        //final average across all repetitions to smooth out OS-level interruptions
         double avgTimeNs = totalTimeNs / Benchmark::REPETITIONS;
 
         file << n << ";" << avgTimeNs << "\n";
@@ -88,7 +97,7 @@ static void runSearchBenchmark(const std::string& testName, const std::string& f
         for (int r = 0; r < Benchmark::REPETITIONS; ++r) {
             std::vector<StructureType> copies(numCopies);
 
-            // 1. PRZYGOTOWANIE: Tworzymy identyczne kopie
+            //preparation phase
             for (int i = 0; i < numCopies; ++i) {
                 RandomGenerator prepRng(Benchmark::SEED + r, 1, 1000000);
                 for (int j = 0; j < n; ++j) {
@@ -96,19 +105,19 @@ static void runSearchBenchmark(const std::string& testName, const std::string& f
                 }
             }
 
-            // 2. UCZCIWE LOSOWANIE ELEMENTU (POZA STOPEREM)
+            //fair drawing of the element outside the stopwatch
             int targetValue = 0;
             if (n > 0) {
-                // Nowy generator tylko do wyboru indeksu (używamy r+123, żeby było inne niż prep)
+                //we use a different rng offset so we don't disrupt the deterministic sequence of prepRng
                 RandomGenerator idxRng(Benchmark::SEED + r + 123, 0, n - 1);
                 int randomIndex = idxRng.getNext() % n;
 
-                // Korzystamy z Twojej metody get_component, żeby poznać wartość
-                // Robimy to na pierwszej kopii (wszystkie są takie same)
+                //extract a guaranteed-to-exist value from the first copy before the timer starts
                 targetValue = copies[0].get_component(randomIndex);
             }
 
-            // 3. POMIAR: Teraz mierzymy tylko czysty search
+            //measurement phase
+            //timer strictly wraps the search execution
             auto start = std::chrono::high_resolution_clock::now();
             for (int i = 0; i < numCopies; ++i) {
                 operation(copies[i], targetValue);
@@ -127,9 +136,8 @@ static void runSearchBenchmark(const std::string& testName, const std::string& f
 }
 
 // ============================================================================
-// TESTY DLA TABLICY DYNAMICZNEJ (DA)
+// dynamic array tests
 // ============================================================================
-// O(1) -> 50 kopii, O(N) -> 5 kopii
 
 void Benchmark::testArrayPushBack() {
     runBenchmark<DynamicArray>("DA::push_back", "DA_push_back.csv", 50,
@@ -163,18 +171,14 @@ void Benchmark::testArrayPopAt() {
 
 void Benchmark::testArraySearch() {
     runSearchBenchmark<DynamicArray>("DA::search", "DA_search.csv", 50,
-        [](DynamicArray& ds, int target) {
-            ds.search(target);
-        });
+        [](DynamicArray& ds, int target) { ds.search(target); });
 }
 
 // ============================================================================
-// TESTY DLA LISTY JEDNOKIERUNKOWEJ (SLL)
+// singly linked list tests
 // ============================================================================
 
 void Benchmark::testSLLPushBack() {
-    // Zakładam, że masz wskaźnik na ogon (Tail), więc to jest O(1) -> 50
-    // Jeśli nie masz i szukasz końca pętlą, zmień na 5
     runBenchmark<SinglyLinkedList>("SLL::push_back", "SLL_push_back.csv", 50,
         [](SinglyLinkedList& ds, RandomGenerator& rng, int n) { ds.push_back(rng.getNext()); });
 }
@@ -206,13 +210,11 @@ void Benchmark::testSLLPopAt() {
 
 void Benchmark::testSLLSearch() {
     runSearchBenchmark<SinglyLinkedList>("SLL::search", "SLL_search.csv", 50,
-        [](SinglyLinkedList& ds, int target) {
-            ds.search(target);
-        });
+        [](SinglyLinkedList& ds, int target) { ds.search(target); });
 }
 
 // ============================================================================
-// TESTY DLA LISTY DWUKIERUNKOWEJ (DLL)
+// doubly linked list tests
 // ============================================================================
 
 void Benchmark::testDLLPushBack() {
@@ -247,7 +249,5 @@ void Benchmark::testDLLPopAt() {
 
 void Benchmark::testDLLSearch() {
     runSearchBenchmark<DoublyLinkedList>("DLL::search", "DLL_search.csv", 50,
-        [](DoublyLinkedList& ds, int target) {
-            ds.search(target);
-        });
+        [](DoublyLinkedList& ds, int target) { ds.search(target); });
 }

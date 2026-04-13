@@ -14,8 +14,8 @@ private:
     Node* tail;
 
 public:
-    virtual void print(void) override;
-    virtual size_t get_size(void) const override;
+    virtual void print() override;
+    virtual size_t get_size() const override;
     virtual int get_component(size_t index) const override;
     virtual bool search(int value) override;
 

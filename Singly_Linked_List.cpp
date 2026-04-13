@@ -15,6 +15,7 @@ SinglyLinkedList::~SinglyLinkedList() {
     }
 }
 
+//iterating through the list and printing the value of each node
 void SinglyLinkedList::print() {
     Node* current = head;
     while (current) {
@@ -104,6 +105,7 @@ void SinglyLinkedList::pop_front() {
         return;
     }
 
+    //deleting the head node and making the next node the new head
     Node* temp = head;
     head = head->next;
     delete temp;
@@ -117,15 +119,18 @@ void SinglyLinkedList::pop_back() {
         return;
     }
 
+    //if there is only one node in the list, we can simply call pop_front
     if (!head->next) {
         pop_front();
         return;
     }
 
+	//we need to find the node before the tail, then we can delete the tail and make the found node the new tail
     Node* current = head;
     while (current->next->next)
         current = current->next;
 
+	//current is now the node before the tail, we can delete the tail and make current the new tail
     delete current->next;
     current->next = nullptr;
     tail = current;

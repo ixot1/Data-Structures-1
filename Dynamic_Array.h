@@ -6,7 +6,7 @@ private:
     size_t size;
     size_t capacity;
     int* array;
-    void resize(size_t new_capacity);
+	void resize(size_t new_capacity); // a helper function to resize the array when needed
 
 public:
     virtual void print() override;

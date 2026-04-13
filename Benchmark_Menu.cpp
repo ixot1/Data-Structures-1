@@ -7,7 +7,7 @@ static void clearInput() {
 	std::cin.clear();
 	std::cin.ignore(100, '\n');
 }
-
+//get and return a choice from the user 
 static int getUserChoice() {
 	int choice;
 	while (!(std::cin >> choice)) {

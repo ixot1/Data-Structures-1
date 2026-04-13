@@ -24,7 +24,7 @@ public:
 };
 
 template <typename StructureType>
-static void runBenchmark(const std::string& testName, const std::string& fileName, int numCopies, // <--- NOWY PARAMETR
+static void runBenchmark(const std::string& testName, const std::string& fileName, int numCopies,
     std::function<void(StructureType&, RandomGenerator&, int)> operation)
 {
     std::cout << "\n[ Beginning benchmark: " << testName << " ]\n";
@@ -42,10 +42,10 @@ static void runBenchmark(const std::string& testName, const std::string& fileNam
         for (int r = 0; r < Benchmark::REPETITIONS; ++r) {
 
             // 1. FAZA PRZYGOTOWANIA
-            std::vector<StructureType> copies(numCopies); // <--- Używamy parametru
+            std::vector<StructureType> copies(numCopies); 
             RandomGenerator prepRng(Benchmark::SEED + r, 1, 1000000);
 
-            for (int i = 0; i < numCopies; ++i) { // <--- Używamy parametru
+            for (int i = 0; i < numCopies; ++i) { 
                 for (int j = 0; j < n; ++j) {
                     copies[i].push_back(prepRng.getNext());
                 }
@@ -55,14 +55,14 @@ static void runBenchmark(const std::string& testName, const std::string& fileNam
 
             // 2. FAZA POMIARU
             auto start = std::chrono::high_resolution_clock::now();
-            for (int i = 0; i < numCopies; ++i) { // <--- Używamy parametru
+            for (int i = 0; i < numCopies; ++i) { 
                 operation(copies[i], testRng, n);
             }
             auto end = std::chrono::high_resolution_clock::now();
 
             // 3. OBLICZENIA
             auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-            totalTimeNs += (static_cast<double>(duration) / numCopies); // <--- Używamy parametru
+            totalTimeNs += (static_cast<double>(duration) / numCopies);
         }
 
         double avgTimeNs = totalTimeNs / Benchmark::REPETITIONS;
@@ -190,7 +190,6 @@ void Benchmark::testSLLPushAt() {
 }
 
 void Benchmark::testSLLPopBack() {
-    // Nawet z wskaźnikiem na ogon, w SLL trzeba przejść listę, żeby znaleźć przedostatni element. To jest O(N) -> 5
     runBenchmark<SinglyLinkedList>("SLL::pop_back", "SLL_pop_back.csv", 50,
         [](SinglyLinkedList& ds, RandomGenerator& rng, int n) { ds.pop_back(); });
 }
@@ -247,7 +246,7 @@ void Benchmark::testDLLPopAt() {
 }
 
 void Benchmark::testDLLSearch() {
-    runSearchBenchmark<DoublyLinkedList>("SLL::search", "SLL_search.csv", 50,
+    runSearchBenchmark<DoublyLinkedList>("DLL::search", "DLL_search.csv", 50,
         [](DoublyLinkedList& ds, int target) {
             ds.search(target);
         });
